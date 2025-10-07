@@ -25,7 +25,7 @@ const UserLogin = () => {
   };
 
   return (
-    <div className="auth-page-wrapper">
+        <div className="auth-page-wrapper">
       <div className="auth-card" role="region" aria-labelledby="user-login-title">
         <header>
           <h1 id="user-login-title" className="auth-title">Welcome back</h1>

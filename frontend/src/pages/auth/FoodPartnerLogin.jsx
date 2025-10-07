@@ -25,7 +25,7 @@ const FoodPartnerLogin = () => {
   };
 
   return (
-    <div className="auth-page-wrapper">
+        <div className="auth-page-wrapper">
       <div className="auth-card" role="region" aria-labelledby="partner-login-title">
         <header>
           <h1 id="partner-login-title" className="auth-title">Partner login</h1>

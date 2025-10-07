@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import '../../styles/auth-shared.css';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const FoodPartnerRegister = () => {
 
@@ -36,7 +35,7 @@ const FoodPartnerRegister = () => {
   };
 
   return (
-    <div className="auth-page-wrapper">
+        <div className="auth-page-wrapper">
       <div className="auth-card" role="region" aria-labelledby="partner-register-title">
         <header>
           <h1 id="partner-register-title" className="auth-title">Partner sign up</h1>

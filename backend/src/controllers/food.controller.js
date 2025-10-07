@@ -32,13 +32,26 @@ async function getFoodItems(req, res) {
 
 
 async function likeFood(req, res) {
-    const { foodId } = req.body;
-    const user = req.user;
+    try {
+        const { foodId } = req.body;
+        const user = req.user;
 
-    const isAlreadyLiked = await likeModel.findOne({
-        user: user._id,
-        food: foodId
-    })
+        if (!foodId) {
+            return res.status(400).json({
+                message: "Food ID is required"
+            });
+        }
+
+        if (!user) {
+            return res.status(401).json({
+                message: "User not authenticated"
+            });
+        }
+
+        const isAlreadyLiked = await likeModel.findOne({
+            user: user._id,
+            food: foodId
+        })
 
     if (isAlreadyLiked) {
         await likeModel.deleteOne({
@@ -68,7 +81,13 @@ async function likeFood(req, res) {
         message: "Food liked successfully",
         like
     })
-
+    } catch (error) {
+        console.error('Error in likeFood:', error);
+        res.status(500).json({
+            message: "An error occurred while liking the food",
+            error: error.message
+        });
+    }
 }
 
 async function saveFood(req, res) {
