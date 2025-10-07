@@ -1,27 +1,30 @@
 const mongoose = require('mongoose');
-const { unique } = require('next/dist/build/utils');
 
 const foodPartnerSchema = new mongoose.Schema({
-    name :{
+    name: {
         type: String,
         required: true
     },
-    phone:{
-        type: String,
-        required:true
-    },
-    address:{
+    contactName: {
         type: String,
         required: true
     },
-    email:{
+    phone: {
+        type: String,
+        required: true
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    email: {
         type: String,
         required: true,
         unique: true
     },
-    password:{
+    password: {
         type: String,
-        require: true
+        required: true
     }
 })
 

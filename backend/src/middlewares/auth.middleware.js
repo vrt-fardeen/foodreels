@@ -1,18 +1,19 @@
-const foodPartnerModel = require("../models/foodpartner.model");
-const userModel = require("../models/user.model");
+const foodPartnerModel = require("../models/foodpartner.model")
+const userModel = require("../models/user.model")
 const jwt = require("jsonwebtoken");
 
-async function authFoodpartnerMiddleware(req, res, next) {
-    
+
+async function authFoodPartnerMiddleware(req, res, next) {
+
     const token = req.cookies.token;
 
-    if(!token){
+    if (!token) {
         return res.status(401).json({
-            message:"Unauthorized access"
+            message: "Please login first"
         })
     }
 
-    try{
+    try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
         const foodPartner = await foodPartnerModel.findById(decoded.id);
@@ -21,39 +22,46 @@ async function authFoodpartnerMiddleware(req, res, next) {
 
         next()
 
-    } catch(err){
+    } catch (err) {
 
         return res.status(401).json({
-            message:"Invalid token"
+            message: "Invalid token"
         })
+
     }
+
 }
 
-async function authUserMiddleware(req, res, next){
+async function authUserMiddleware(req, res, next) {
+
     const token = req.cookies.token;
 
-    if(!token) {
+    if (!token) {
         return res.status(401).json({
-            message:"Please login first"
+            message: "Please login first"
         })
     }
 
-    try{
+    try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
+
         const user = await userModel.findById(decoded.id);
-        req.user = user;
-        next();
 
-        } catch(err){
+        req.user = user
 
-            return res.status(401).json({
-                message:"Invalid token"
-            })
-        }
+        next()
+
+    } catch (err) {
+
+        return res.status(401).json({
+            message: "Invalid token"
+        })
+
     }
 
+}
 
 module.exports = {
-    authFoodpartnerMiddleware,
+    authFoodPartnerMiddleware,
     authUserMiddleware
 }
