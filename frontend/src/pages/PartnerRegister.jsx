@@ -1,7 +1,39 @@
 import React from 'react'
 import '../styles/auth.css'
+import axios from 'axios';
+import { useNavigate} from 'react-router-dom';
 
 const PartnerRegister = () => {
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const name = e.target.businessName.value;
+    const email = e.target.email.value;
+    const phone = e.target.phone.value;
+    const address = e.target.address.value;
+    const password = e.target.password.value;
+
+     axios.post("http://localhost:3000/api/auth/food-partner/register",{
+      name,
+      email,
+      phone,
+      address,
+      password
+    }, { withCredentials: true
+    })
+    .then(response => {
+      console.log(response.data);
+      navigate("/create-food");
+    })
+    .catch(error => {
+      console.error("There was an error!", error);
+    })
+  }
+
+
   return (
     <div className="auth-page">
       <div className="auth-card">
@@ -10,7 +42,7 @@ const PartnerRegister = () => {
           <p className="auth-subtitle">Create your food partner account</p>
         </div>
 
-        <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
+        <form className="auth-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="businessName">Business Name</label>
             <input 

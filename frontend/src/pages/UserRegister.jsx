@@ -19,6 +19,8 @@ const UserRegister = () => {
             fullName,
             email,
             password
+        }, {
+          withCredentials: true
         })
 
         console.log(response.data);
