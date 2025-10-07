@@ -3,11 +3,23 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/reels.css'
 import './home-fab.css'
+import '../../styles/auth-shared.css'
 import ReelFeed from '../../components/ReelFeed'
 
 const Home = () => {
     const [ videos, setVideos ] = useState([])
     const navigate = useNavigate()
+
+    const handleLogout = async () => {
+        try {
+            await axios.post('http://localhost:3000/api/auth/logout', {}, { withCredentials: true })
+            navigate('/user/login')
+        } catch (error) {
+            console.error('Error logging out:', error)
+            // Still redirect to login page even if there's an error
+            navigate('/user/login')
+        }
+    }
     // Autoplay behavior is handled inside ReelFeed
 
     useEffect(() => {
@@ -86,6 +98,17 @@ const Home = () => {
 
     return (
         <>
+            <button
+                onClick={handleLogout}
+                className="logout-button"
+                title="Logout">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+                Logout
+            </button>
             <button 
                 className="create-food-fab"
                 onClick={() => navigate('/food-partner/register')}
